@@ -1,6 +1,6 @@
 package com.global;
 
-public class Main implements IArithmeticsAdd {
+public class Main implements IArithmeticsAdd, IArithmeticsDiv {
 
     public static void main(String[] args) {
         // write your code here
@@ -16,4 +16,7 @@ public class Main implements IArithmeticsAdd {
     public double Addition(double A, double B) {
         return A + B;
     }
+
+    @Override
+    public double Division(double A, double B) { return A / B; }
 }
