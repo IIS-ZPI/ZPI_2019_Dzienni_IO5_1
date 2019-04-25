@@ -24,6 +24,7 @@ public class Main implements IArithmeticsAdd, IArithmeticsDiff, IArithmeticsPowe
     @Override
     public double Multiplication(double A, double B) {
         return A * B;
+        
     }
     //EkoGroszek comment 3
      @Override
