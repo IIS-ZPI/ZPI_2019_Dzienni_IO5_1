@@ -1,6 +1,6 @@
 package com.global;
 
-public class Main implements IArithmeticsAdd, IArithmeticsDiff, IArithmeticsPower {
+public class Main implements IArithmeticsAdd, IArithmeticsDiff, IArithmeticsPower, IArithemticsDiv {
 
     public static void main(String[] args) {
         // write your code here
@@ -34,6 +34,9 @@ public class Main implements IArithmeticsAdd, IArithmeticsDiff, IArithmeticsPowe
         else
             return 1/result;
     }
+
+    @Override
+    public double Division(double A, double B) { return A / B; }
 }
 
 
