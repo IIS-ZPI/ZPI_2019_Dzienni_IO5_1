@@ -23,7 +23,9 @@ public class Main implements IArithmeticsAdd, IArithmeticsDiff, IArithmeticsPowe
     }
     ///Commit for zad5_1 KovalykVolodymyr
     @Override
+    ///Commit for zad5_2 KovalykVolodymyr
     public double Multiplication(double A, double B) {
+        ///Commit for zad5_3 KovalykVolodymyr
         return A * B;
     }
   
