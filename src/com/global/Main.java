@@ -1,10 +1,6 @@
 package com.global;
 
-
-
-
-public class Main implements IArithmeticsAdd,IArithmeticsDiff {
-
+public class Main implements IArithmeticsAdd, IArithmeticsDiff, IArithmeticsPower {
 
     public static void main(String[] args) {
         // write your code here
@@ -25,4 +21,21 @@ public class Main implements IArithmeticsAdd,IArithmeticsDiff {
     public double Addition(double A, double B) {
         return A + B;
     }
+  
+     @Override
+    public double Power(double A, double B) {
+        if (B == 0)
+            return 1;
+        double result = A;
+        for (int i = 1; i < Math.abs(B); i++)
+            result *= A;
+        if (B > 0)
+            return result;
+        else
+            return 1/result;
+    }
 }
+
+
+
+
