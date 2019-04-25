@@ -4,7 +4,6 @@ public class Main implements IArithmeticsAdd, IArithmeticsDiff, IArithmeticsPowe
 
     public static void main(String[] args) {
         // write your code here
-        // comment
         System.out.println("Group name: ZPI_2019_Dzienni_IO5_1\nTeam Leader: badfilling\nRole: operations");
         System.out.println("kmzarski");
         System.out.println("Mariusz1306");
