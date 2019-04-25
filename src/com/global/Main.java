@@ -1,6 +1,6 @@
 package com.global;
 
-public class Main implements IArithmeticsAdd, IArithmeticsDiv {
+public class Main implements IArithmeticsAdd,IArithmeticsDiff, IArithmeticsDiv {
 
     public static void main(String[] args) {
         // write your code here
@@ -10,6 +10,11 @@ public class Main implements IArithmeticsAdd, IArithmeticsDiv {
         System.out.println("GitHub id KovalykVolodymyr");
         System.out.println("GitHub id EkoGroszek");
         System.out.println("Artur Stepaniuk - githubID: badfilling");
+    }
+
+    @Override
+    public double Difference(double A, double B) {
+        return A - B;
     }
 
     @Override
