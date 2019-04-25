@@ -10,6 +10,7 @@ public class Main implements IArithmeticsAdd, IArithmeticsDiff, IArithmeticsPowe
         System.out.println("GitHub id KovalykVolodymyr");
         System.out.println("GitHub id EkoGroszek");
         System.out.println("Artur Stepaniuk - githubID: badfilling");
+        // komentarz 1
     }
 
     @Override
