@@ -11,7 +11,7 @@ public class Main implements IArithmeticsAdd, IArithmeticsDiff, IArithmeticsPowe
         System.out.println("GitHub id EkoGroszek");
         System.out.println("Artur Stepaniuk - githubID: badfilling");
     }
-
+    //EkoGroszek coment 1
     @Override
     public double Difference(double A, double B) {
         return A - B;
