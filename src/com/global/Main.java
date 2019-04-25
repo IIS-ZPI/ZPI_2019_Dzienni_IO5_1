@@ -16,7 +16,7 @@ public class Main implements IArithmeticsAdd, IArithmeticsDiff, IArithmeticsPowe
     public double Difference(double A, double B) {
         return A - B;
     }
-
+    //EkoGroszek comment 2
     @Override
     public double Addition(double A, double B) {
         return A + B;
