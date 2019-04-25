@@ -25,7 +25,7 @@ public class Main implements IArithmeticsAdd, IArithmeticsDiff, IArithmeticsPowe
     public double Multiplication(double A, double B) {
         return A * B;
     }
-  
+  //EkoGroszek comment to revert
      @Override
     public double Power(double A, double B) {
         if (B == 0)
