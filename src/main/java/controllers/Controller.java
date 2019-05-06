@@ -1,4 +1,4 @@
-package sample;
+package controllers;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -10,13 +10,14 @@ import java.io.IOException;
 
 public class Controller {
 
-    @FXML GridPane mainGridPane;  //parametr od formatowania głównego okna aplikacji
+    @FXML
+    GridPane mainGridPane;  //parametr od formatowania głównego okna aplikacji
 
     public void showNewItemDialog() {                                                                                   // funkcja od wyskakującego okienka
         Dialog<ButtonType> dialog = new Dialog<>();
         dialog.initOwner(mainGridPane.getScene().getWindow());
         dialog.setTitle("Okno z wynikiem i wykresem ");
-       // dialog.setHeaderText("Taki nagłówek ale odgordzony od reszty");
+        // dialog.setHeaderText("Taki nagłówek ale odgordzony od reszty");
         FXMLLoader fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(getClass().getResource(
                 "/resultWindow.fxml"));
