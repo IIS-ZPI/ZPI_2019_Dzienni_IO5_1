@@ -1,17 +1,24 @@
 package controllers;
 
+import models.CountSessionStateModel;
 import models.CurrencyModel;
+import models.RateModel;
 import org.codehaus.jackson.map.ObjectMapper;
 
 import java.net.URL;
 
+
 public class CurrencyInfoController {
     private CurrencyModel currentCurrencyModel;
+    private double epsilon = 0.005;
 
+    // last to ilosc dni w tył.
+    // countSessionStateModel zawiera wynik.
     public CurrencyInfoController(String tableType, String currencySign, String last) {
         String urlBase = buildStringUrl(tableType, currencySign, last);
         currentCurrencyModel = createCurrencyModelFromUrl(urlBase);
-        System.out.println(currentCurrencyModel.getRates().get(0).getMid());
+        CountSessionStateModel countSessionStateModel = countSessionStateForThePeriod();
+        // System.out.println(countSessionStateModel);
     }
 
     private CurrencyModel createCurrencyModelFromUrl(String urlBase) {
@@ -33,5 +40,28 @@ public class CurrencyInfoController {
         urlBase += "?format=json";
         return urlBase;
     }
-    
+
+    private CountSessionStateModel countSessionStateForThePeriod() {
+
+        RateModel lastRateModel = null;
+        CountSessionStateModel countSessionStateModel = new CountSessionStateModel();
+        boolean firstRateModelIsFilled = false;
+
+        for (RateModel r : currentCurrencyModel.getRates()) {
+            if (!firstRateModelIsFilled) {
+                lastRateModel = r;
+                firstRateModelIsFilled = true;
+            } else {
+                if (Math.abs(r.getMid() - lastRateModel.getMid()) < epsilon) {
+                    countSessionStateModel.increaseMaintainedResult();
+                } else if (r.getMid() > lastRateModel.getMid()) {
+                    countSessionStateModel.increaseGrownResult();
+                } else if (r.getMid() < lastRateModel.getMid()) {
+                    countSessionStateModel.increaseFellResult();
+                }
+                lastRateModel = r;
+            }
+        }
+        return countSessionStateModel;
+    }
 }
