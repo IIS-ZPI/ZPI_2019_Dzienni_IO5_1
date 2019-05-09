@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<?import javafx.collections.FXCollections?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import java.lang.*?>
+<GridPane alignment="center" hgap="10" vgap="10" fx:id="mainGridPane" xmlns:fx="http://javafx.com/fxml/1"
+          xmlns="http://javafx.com/javafx/8.0.172-ea" fx:controller="controllers.Controller">
+    <children>
+        <Label id="thirdLabel" GridPane.columnIndex="0" GridPane.rowIndex="0" prefWidth="150.0" styleClass="bold-label"
+               text="Rodzaj analizy"/>
+        <ComboBox fx:id="thirdCombo" GridPane.columnIndex="0" GridPane.rowIndex="1" prefWidth="150.0" promptText="choose">
+            <items>
+                <FXCollections fx:factory="observableArrayList">
+                    <String fx:value="Analiza 1"/>
+                    <String fx:value="Analiza 2"/>
+                    <String fx:value="Analiza 3 "/>
+                </FXCollections>
+            </items>
+        </ComboBox>
+        <Label id="firstLabel" GridPane.columnIndex="1" GridPane.rowIndex="0" prefWidth="100.0" styleClass="bold-label" text="Waluta"/>
+        <ComboBox fx:id="firstCombo" GridPane.columnIndex="1" GridPane.rowIndex="1" prefWidth="100.0" promptText="Waluta">
+            <items>
+                <FXCollections fx:factory="observableArrayList">
+                    <String fx:value="EUR"/>
+                    <String fx:value="PLN"/>
+                    <String fx:value="USD"/>
+                </FXCollections>
+            </items>
+        </ComboBox>
+        <Label id="secondLabel" GridPane.columnIndex="2" GridPane.rowIndex="0" prefWidth="150.0" styleClass="bold-label" text="Okres"/>
+        <ComboBox fx:id="secondCombo" GridPane.columnIndex="2" GridPane.rowIndex="1" prefWidth="150.0" promptText="choose">
+            <items>
+                <FXCollections fx:factory="observableArrayList">
+                    <String fx:value="1 tydzień"/>
+                    <String fx:value="2 tygodnie"/>
+                    <String fx:value="1 miesiac"/>
+                    <String fx:value="pół roku"/>
+                    <String fx:value="rok"/>
+                </FXCollections>
+            </items>
+        </ComboBox>
+
+        <Button id="calculateButton" GridPane.columnIndex="2" GridPane.rowIndex="10" prefWidth="100.0" text="Licz"
+                onAction="#showNewItemDialog">
+
+        </Button>
+
+    </children>
+</GridPane>
