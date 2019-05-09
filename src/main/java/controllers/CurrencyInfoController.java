@@ -10,14 +10,14 @@ import java.net.URL;
 
 public class CurrencyInfoController {
     private CurrencyModel currentCurrencyModel;
-    private double epsilon = 0.005;
+    private static double epsilon = 0.005;
 
     // last to ilosc dni w tył.
     // countSessionStateModel zawiera wynik.
     public CurrencyInfoController(String tableType, String currencySign, String last) {
         String urlBase = buildStringUrl(tableType, currencySign, last);
         currentCurrencyModel = createCurrencyModelFromUrl(urlBase);
-        CountSessionStateModel countSessionStateModel = countSessionStateForThePeriod();
+        CountSessionStateModel countSessionStateModel = countSessionStateForThePeriod(currentCurrencyModel);
         // System.out.println(countSessionStateModel);
     }
 
@@ -41,7 +41,8 @@ public class CurrencyInfoController {
         return urlBase;
     }
 
-    private CountSessionStateModel countSessionStateForThePeriod() {
+    //TODO: wynieść do klasy z logiką biznesową?
+    public static CountSessionStateModel countSessionStateForThePeriod(CurrencyModel currentCurrencyModel) {
 
         RateModel lastRateModel = null;
         CountSessionStateModel countSessionStateModel = new CountSessionStateModel();
