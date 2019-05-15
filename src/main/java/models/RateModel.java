@@ -5,11 +5,15 @@ public class RateModel {
     private String no;
     private String effectiveDate;
     private Double mid;
+    private Double bid;
+    private Double ask;
 
-    public RateModel(String no, String effectiveDate, Double mid) {
+    public RateModel(String no, String effectiveDate, Double mid, Double bid, Double ask) {
         this.no = no;
         this.effectiveDate = effectiveDate;
         this.mid = mid;
+        this.bid = bid;
+        this.ask = ask;
     }
 
     public RateModel() {
