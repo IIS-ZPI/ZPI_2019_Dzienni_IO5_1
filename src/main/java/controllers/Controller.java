@@ -40,6 +40,9 @@ public class Controller {
     public int getCurrencyIndex() {
         return currency.getSelectionModel().getSelectedIndex();
     }
+    public String getCurrencyName(){
+        return currency.getSelectionModel().getSelectedItem().toString();
+    }
 
     public int getPeriodIndex() {
         return period.getSelectionModel().getSelectedIndex();
@@ -57,6 +60,7 @@ public class Controller {
     }
 
     public String getStatistics() {
+        statisticsController.setCurrency(getCurrencyName());
         statisticsController.setPeriodAndCalculate(getPeriodName());
         System.out.println(statisticsController.getStats());
 
@@ -66,40 +70,12 @@ public class Controller {
     @FXML public void showNewItemDialog() {
         statisticsController = new StatisticsController();
 
-        System.out.println("Zoba tera");
+        System.out.println("currency name : " + getCurrencyName());
         chartArea.setText(getStatistics());
 
     }
 
-    //    @FXML
-    //    public void showNewItemDialog() {                                                                                   // funkcja od wyskakującego okienka
-    //        Dialog<ButtonType> dialog = new Dialog<>();
-    //        dialog.initOwner(mainGridPane.getScene().getWindow());
-    //        dialog.setTitle("Okno z wynikiem i wykresem ");
-    //        // dialog.setHeaderText("Taki nagłówek ale odgordzony od reszty");
-    //        FXMLLoader fxmlLoader = new FXMLLoader();
-    //        fxmlLoader.setLocation(getClass().getResource("/resultWindow.fxml"));
-    ////        ResultWindowControler resultWindowControler = new ResultWindowControler();
-    //        ResultWindowControler resultWindowControler = fxmlLoader.<ResultWindowControler>getController();
-    //
-    //        statisticsController = new StatisticsController();
-    //        try {
-    //            dialog.getDialogPane().setContent(fxmlLoader.load());
-    //            dialog.show();
-    //            getIndexes(); // do debugu wyświetla indeksy wybranych comboBoxów
-    //            getStatistics();
-    //            resultWindowControler.setLabelAs();
-    //
-    //        } catch (IOException e) {
-    //            System.out.println("Nie mogę załadować dialogu");
-    //            e.printStackTrace();
-    //            return;
-    //        }
-    //        dialog.getDialogPane().getButtonTypes().add(ButtonType.CANCEL);
-    //
-    //        //        Optional<ButtonType> result = dialog.showAndWait();
-    //
-    //    }
+
 }
 
 
