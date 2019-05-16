@@ -1,10 +1,13 @@
 package controllers;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
+import javafx.scene.chart.LineChart;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.GridPane;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Controller {
 
@@ -20,14 +23,20 @@ public class Controller {
 
     @FXML TextArea chartArea;
 
-    @FXML Button calculateButton;
+    @FXML LineChart lineChart;
 
-    //    @FXML Label testLabel;
+    List<String> lista = new ArrayList<String>();
 
-    StringBuilder result;
+
 
     @FXML public void initialize() {
         chartArea.setText("Tu kiedyś będzie wykers .. i hope so");
+        lista.add("test");
+        lista.add("test");
+        lista.add("test");
+        lineChart.setVisible(false);
+
+        currency.getItems().addAll(lista);
 
 
     }
@@ -35,6 +44,9 @@ public class Controller {
     public int getAnaliseTypeIndex() {
         //return analiseType.getValue().toString();
         return analiseType.getSelectionModel().getSelectedIndex();
+    }
+    public String getAnaliseTypeName(){
+        return analiseType.getSelectionModel().getSelectedItem().toString();
     }
 
     public int getCurrencyIndex() {
@@ -56,7 +68,6 @@ public class Controller {
         System.out.println("Analise type :" + getAnaliseTypeIndex());
         System.out.println("Currency :" + getCurrencyIndex());
         System.out.println("Period :" + getPeriodName());
-        //        System.out.println("Period :" + getPeriodIndex());
     }
 
     public String getStatistics() {
@@ -67,6 +78,17 @@ public class Controller {
         return statisticsController.getStats().toString();
     }
 
+    @FXML public void checkAnaliseName(){
+        if(getAnaliseTypeName().equals("Rozkład zmiam") ){
+            lineChart.setVisible(true);
+            chartArea.setVisible(false);
+        }else {
+            lineChart.setVisible(false);
+            chartArea.setVisible(true);
+        }
+        System.out.println("to działa" + getAnaliseTypeName());
+
+    }
     @FXML public void showNewItemDialog() {
         statisticsController = new StatisticsController();
 

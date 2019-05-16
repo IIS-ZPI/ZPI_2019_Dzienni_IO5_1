@@ -2,6 +2,9 @@
 
 
 <?import javafx.collections.FXCollections?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import java.lang.*?>
@@ -10,13 +13,13 @@
     <children>
         <Label id="thirdLabel" GridPane.columnIndex="0" GridPane.rowIndex="0" prefWidth="150.0" styleClass="bold-label"
                text="Rodzaj analizy"/>
-        <ComboBox fx:id="analiseType" GridPane.columnIndex="0" GridPane.rowIndex="1" prefWidth="150.0" promptText="Analiza">
+        <ComboBox fx:id="analiseType" GridPane.columnIndex="0" GridPane.rowIndex="1" prefWidth="150.0" promptText="Analiza" onAction="#checkAnaliseName">
             <items>
                 <FXCollections fx:factory="observableArrayList">
                     <String fx:value="Wyznaczanie ilości sesji"/>
                     <String fx:value="Miary statystyczne"/>
                     <String fx:value="Rozkład zmiam"/>
-                </FXCollections>
+            </FXCollections>
             </items>
         </ComboBox>
         <Label id="firstLabel" GridPane.columnIndex="1" GridPane.rowIndex="0" prefWidth="100.0" styleClass="bold-label" text="Waluta"/>
@@ -27,6 +30,9 @@
                     <String fx:value="USD"/>
                 </FXCollections>
             </items>
+            <value>
+                <String fx:value="USD"/>
+            </value>
         </ComboBox>
         <Label id="secondLabel" GridPane.columnIndex="2" GridPane.rowIndex="0" prefWidth="150.0" styleClass="bold-label" text="Okres"/>
         <ComboBox fx:id="period" GridPane.columnIndex="2" GridPane.rowIndex="1" prefWidth="150.0" promptText="choose">
@@ -48,11 +54,13 @@
         <Button id="calculateButton" GridPane.columnIndex="5" GridPane.rowIndex="1" prefWidth="100.0" text="Licz"
                 onAction="#showNewItemDialog"/>
         <TextArea fx:id="chartArea" GridPane.columnIndex="2" GridPane.rowIndex="9" prefWidth="500.0" prefHeight="500" styleClass="bold-label" text=""/>
-<!--        <Label fx:id="testLabel" GridPane.columnIndex="2" GridPane.rowIndex="8" prefWidth="100.0" prefHeight="100" styleClass="bold-label" text=""/>-->
-
-
-
-
-
+        <LineChart fx:id="lineChart" title="Chart Test" GridPane.columnIndex="2" GridPane.rowIndex="9" prefWidth="500.0" prefHeight="500">
+        <xAxis>
+            <CategoryAxis side="BOTTOM" />
+        </xAxis>
+        <yAxis>
+            <NumberAxis side="LEFT" />
+        </yAxis>
+    </LineChart>
     </children>
 </GridPane>
