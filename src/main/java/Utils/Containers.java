@@ -16,7 +16,7 @@ public class Containers {
 
     public List<String> readFile(String fileName) {
         String linia = null;
-        List<String> people = new ArrayList<String>();
+        List<String> rate = new ArrayList<String>();
 
         try {
             // Uworzenie obiektu FileReader
@@ -26,7 +26,7 @@ public class Containers {
             BufferedReader bufferReader = new BufferedReader(fileReader);
 
             while ((linia = bufferReader.readLine()) != null) {
-                people.add(linia);
+                rate.add(linia);
                 System.out.println(linia);
             }
             fileReader.close();
@@ -37,7 +37,7 @@ public class Containers {
             e.printStackTrace();
         }
 
-        return people;
+        return rate;
 
     }
 
