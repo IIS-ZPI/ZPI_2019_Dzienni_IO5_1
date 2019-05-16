@@ -20,7 +20,7 @@ public class StatisticsController {
 
     public void setPeriodAndCalculate(String s) {
         switch (s) {
-            case ("1 tydzien"):
+            case ("1 tydzień"):
                 chosedPeriod = Period.of(0, 0, 7);
                 break;
             case ("2 tygodnie"):
@@ -32,7 +32,7 @@ public class StatisticsController {
             case ("kwartal"):
                 chosedPeriod = Period.of(0, 3, 0);
                 break;
-            case ("pol roku"):
+            case ("pół roku"):
                 chosedPeriod = Period.of(0, 6, 0);
                 break;
             case ("rok"):

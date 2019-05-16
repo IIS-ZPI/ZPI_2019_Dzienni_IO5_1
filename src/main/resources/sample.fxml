@@ -10,17 +10,17 @@
     <children>
         <Label id="thirdLabel" GridPane.columnIndex="0" GridPane.rowIndex="0" prefWidth="150.0" styleClass="bold-label"
                text="Rodzaj analizy"/>
-        <ComboBox fx:id="thirdCombo" GridPane.columnIndex="0" GridPane.rowIndex="1" prefWidth="150.0" promptText="choose">
+        <ComboBox fx:id="analiseType" GridPane.columnIndex="0" GridPane.rowIndex="1" prefWidth="150.0" promptText="Analiza">
             <items>
                 <FXCollections fx:factory="observableArrayList">
-                    <String fx:value="Analiza 1"/>
-                    <String fx:value="Analiza 2"/>
-                    <String fx:value="Analiza 3 "/>
+                    <String fx:value="Wyznaczanie ilości sesji"/>
+                    <String fx:value="Miary statystyczne"/>
+                    <String fx:value="Rozkład zmiam"/>
                 </FXCollections>
             </items>
         </ComboBox>
         <Label id="firstLabel" GridPane.columnIndex="1" GridPane.rowIndex="0" prefWidth="100.0" styleClass="bold-label" text="Waluta"/>
-        <ComboBox fx:id="firstCombo" GridPane.columnIndex="1" GridPane.rowIndex="1" prefWidth="100.0" promptText="Waluta">
+        <ComboBox fx:id="currency" GridPane.columnIndex="1" GridPane.rowIndex="1" prefWidth="100.0" promptText="Waluta">
             <items>
                 <FXCollections fx:factory="observableArrayList">
                     <String fx:value="EUR"/>
@@ -30,22 +30,30 @@
             </items>
         </ComboBox>
         <Label id="secondLabel" GridPane.columnIndex="2" GridPane.rowIndex="0" prefWidth="150.0" styleClass="bold-label" text="Okres"/>
-        <ComboBox fx:id="secondCombo" GridPane.columnIndex="2" GridPane.rowIndex="1" prefWidth="150.0" promptText="choose">
+        <ComboBox fx:id="period" GridPane.columnIndex="2" GridPane.rowIndex="1" prefWidth="150.0" promptText="choose">
             <items>
-                <FXCollections fx:factory="observableArrayList">
+                <FXCollections fx:factory="observableArrayList" >
                     <String fx:value="1 tydzień"/>
                     <String fx:value="2 tygodnie"/>
                     <String fx:value="1 miesiac"/>
+                    <String fx:value="kwartal"/>
                     <String fx:value="pół roku"/>
                     <String fx:value="rok"/>
                 </FXCollections>
             </items>
+            <value>
+                <String fx:value="1 tydzień" />
+            </value>
         </ComboBox>
 
-        <Button id="calculateButton" GridPane.columnIndex="2" GridPane.rowIndex="10" prefWidth="100.0" text="Licz"
-                onAction="#showNewItemDialog">
+        <Button id="calculateButton" GridPane.columnIndex="5" GridPane.rowIndex="1" prefWidth="100.0" text="Licz"
+                onAction="#showNewItemDialog"/>
+        <TextArea fx:id="chartArea" GridPane.columnIndex="2" GridPane.rowIndex="9" prefWidth="500.0" prefHeight="500" styleClass="bold-label" text=""/>
+<!--        <Label fx:id="testLabel" GridPane.columnIndex="2" GridPane.rowIndex="8" prefWidth="100.0" prefHeight="100" styleClass="bold-label" text=""/>-->
 
-        </Button>
+
+
+
 
     </children>
 </GridPane>
