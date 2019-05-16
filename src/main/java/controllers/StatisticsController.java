@@ -6,6 +6,7 @@ import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
 
 import java.time.Period;
 
+// Demo controller, to refactor or deleted
 public class StatisticsController {
     private DescriptiveStatistics stats;
     private Period chosedPeriod;
