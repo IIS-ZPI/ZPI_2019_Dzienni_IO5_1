@@ -13,7 +13,7 @@
 >
 
     <GridPane>
-        <Label>Witam w drugim oknie</Label>
+        <Label id="mainLabel">Witam w drugim oknie</Label>
 
     </GridPane>
 
