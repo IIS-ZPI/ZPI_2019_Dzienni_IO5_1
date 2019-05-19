@@ -7,8 +7,6 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.GridPane;
 
-import java.util.List;
-
 public class Controller {
 
     StatisticsController statisticsController;
@@ -31,19 +29,13 @@ public class Controller {
 
     private String fileWithCurrences = "Exchange Rate.txt";
 
-    private List<String> currencyList;      //lista walut
-
-
-
     @FXML public void initialize() {
-        chartArea.setText("Tu kiedyś będzie wykers .. i hope so");
+        chartArea.setText("Tu się wyświętlą dane z analizy");
         containers = new Containers();
-//        currencyList = containers.readFile(fileWithCurrences);
         lineChart.setVisible(false);
         currencyToCompare.setVisible(false);
-
-//        currency.getItems().addAll(currencyList);
-//       currency.getItems().addAll(containers.readFile(fileWithCurrences));
+        currency.getItems().addAll(containers.readFile(fileWithCurrences));
+        currencyToCompare.getItems().addAll(containers.readFile(fileWithCurrences));
 
     }
 
