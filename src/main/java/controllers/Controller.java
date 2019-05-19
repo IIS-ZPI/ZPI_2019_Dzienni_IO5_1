@@ -19,6 +19,8 @@ public class Controller {
 
     @FXML ComboBox currency;
 
+    @FXML ComboBox currencyToCompare;
+
     @FXML ComboBox period;
 
     @FXML TextArea chartArea;
@@ -35,6 +37,7 @@ public class Controller {
         lista.add("test");
         lista.add("test");
         lineChart.setVisible(false);
+        currencyToCompare.setVisible(false);
 
         currency.getItems().addAll(lista);
 
@@ -81,9 +84,11 @@ public class Controller {
     @FXML public void checkAnaliseName(){
         if(getAnaliseTypeName().equals("Rozkład zmiam") ){
             lineChart.setVisible(true);
+            currencyToCompare.setVisible(true);
             chartArea.setVisible(false);
         }else {
             lineChart.setVisible(false);
+            currencyToCompare.setVisible(false);
             chartArea.setVisible(true);
         }
         System.out.println("to działa" + getAnaliseTypeName());
