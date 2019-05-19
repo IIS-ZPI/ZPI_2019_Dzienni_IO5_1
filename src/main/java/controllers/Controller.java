@@ -1,12 +1,12 @@
 package controllers;
 
+import Utils.Containers;
 import javafx.fxml.FXML;
 import javafx.scene.chart.LineChart;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.GridPane;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Controller {
@@ -19,25 +19,31 @@ public class Controller {
 
     @FXML ComboBox currency;
 
+    @FXML ComboBox currencyToCompare;
+
     @FXML ComboBox period;
 
     @FXML TextArea chartArea;
 
     @FXML LineChart lineChart;
 
-    List<String> lista = new ArrayList<String>();
+    private Containers containers;          //klasa od pobierania listy walut z pliku
+
+    private String fileWithCurrences = "Exchange Rate.txt";
+
+    private List<String> currencyList;      //lista walut
 
 
 
     @FXML public void initialize() {
         chartArea.setText("Tu kiedyś będzie wykers .. i hope so");
-        lista.add("test");
-        lista.add("test");
-        lista.add("test");
+        containers = new Containers();
+//        currencyList = containers.readFile(fileWithCurrences);
         lineChart.setVisible(false);
+        currencyToCompare.setVisible(false);
 
-        currency.getItems().addAll(lista);
-
+//        currency.getItems().addAll(currencyList);
+//       currency.getItems().addAll(containers.readFile(fileWithCurrences));
 
     }
 
@@ -45,14 +51,16 @@ public class Controller {
         //return analiseType.getValue().toString();
         return analiseType.getSelectionModel().getSelectedIndex();
     }
-    public String getAnaliseTypeName(){
+
+    public String getAnaliseTypeName() {
         return analiseType.getSelectionModel().getSelectedItem().toString();
     }
 
     public int getCurrencyIndex() {
         return currency.getSelectionModel().getSelectedIndex();
     }
-    public String getCurrencyName(){
+
+    public String getCurrencyName() {
         return currency.getSelectionModel().getSelectedItem().toString();
     }
 
@@ -78,17 +86,20 @@ public class Controller {
         return statisticsController.getStats().toString();
     }
 
-    @FXML public void checkAnaliseName(){
-        if(getAnaliseTypeName().equals("Rozkład zmiam") ){
+    @FXML public void checkAnaliseName() {
+        if (getAnaliseTypeName().equals("Rozkład zmiam")) {
             lineChart.setVisible(true);
+            currencyToCompare.setVisible(true);
             chartArea.setVisible(false);
-        }else {
+        } else {
             lineChart.setVisible(false);
+            currencyToCompare.setVisible(false);
             chartArea.setVisible(true);
         }
         System.out.println("to działa" + getAnaliseTypeName());
 
     }
+
     @FXML public void showNewItemDialog() {
         statisticsController = new StatisticsController();
 
@@ -96,7 +107,6 @@ public class Controller {
         chartArea.setText(getStatistics());
 
     }
-
 
 }
 
