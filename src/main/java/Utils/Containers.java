@@ -26,7 +26,7 @@ public class Containers {
 
             while ((linia = bufferReader.readLine()) != null) {
                 rate.add(linia);
-                System.out.println(linia);
+//                System.out.println(linia);
             }
             fileReader.close();
         }

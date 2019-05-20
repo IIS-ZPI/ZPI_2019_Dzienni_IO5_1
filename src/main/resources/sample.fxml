@@ -26,8 +26,6 @@
         <ComboBox fx:id="currency" GridPane.columnIndex="1" GridPane.rowIndex="1" prefWidth="100.0" promptText="Waluta">
             <items>
                 <FXCollections fx:factory="observableArrayList">
-                    <String fx:value="EUR"/>
-                    <String fx:value="USD"/>
                 </FXCollections>
             </items>
             <value>
@@ -37,8 +35,6 @@
         <ComboBox fx:id="currencyToCompare" GridPane.columnIndex="1" GridPane.rowIndex="2" prefWidth="100.0" promptText="Waluta2">
             <items>
                 <FXCollections fx:factory="observableArrayList">
-                    <String fx:value="EUR"/>
-                    <String fx:value="USD"/>
                 </FXCollections>
             </items>
             <value>
