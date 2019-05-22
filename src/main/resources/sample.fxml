@@ -32,15 +32,6 @@
                 <String fx:value="USD"/>
             </value>
         </ComboBox>
-        <ComboBox fx:id="currencyToCompare" GridPane.columnIndex="1" GridPane.rowIndex="2" prefWidth="100.0" promptText="Waluta2">
-            <items>
-                <FXCollections fx:factory="observableArrayList">
-                </FXCollections>
-            </items>
-            <value>
-                <String fx:value="USD"/>
-            </value>
-        </ComboBox>
         <Label id="secondLabel" GridPane.columnIndex="2" GridPane.rowIndex="0" prefWidth="150.0" styleClass="bold-label" text="Okres"/>
         <ComboBox fx:id="period" GridPane.columnIndex="2" GridPane.rowIndex="1" prefWidth="150.0" promptText="choose">
             <items>
