@@ -3,6 +3,7 @@ package Network;
 import Utils.DateHelper;
 import models.CurrencyModel;
 import models.RateModel;
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.codehaus.jackson.map.ObjectMapper;
 
 import java.net.MalformedURLException;
@@ -23,6 +24,7 @@ public class CurrencyInfoLoader {
 
 	private CurrencyInfoLoader() {
 		this.objectMapper = new ObjectMapper();
+
 	}
 
 	public static CurrencyInfoLoader getInstance() {
@@ -46,6 +48,7 @@ public class CurrencyInfoLoader {
 	 *  Counts only working days.
 	 *  Example: period for 1 month will contain ~20 records in CurrencyModel.rates
 	 * */
+
 	public CurrencyModel getCurrencyModelForPeriod(String tableType, String currency, Period period) {
 
 		LocalDate today = LocalDate.now();
