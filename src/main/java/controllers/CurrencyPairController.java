@@ -4,18 +4,34 @@ import Network.CurrencyInfoLoader;
 import models.CurrencyModel;
 import models.RateModel;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.time.Period;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CurrencyPairController {
     private CurrencyInfoLoader currencyInfoLoader;
     private Period chosedPeriod;
     private String chosedCurrencyPair;
+    private List<String> availableCurrencyPairs;
 
     public CurrencyPairController() {
         this.currencyInfoLoader = CurrencyInfoLoader.getInstance();
+        availableCurrencyPairs = new ArrayList<>();
+        addAvailablePairs();
+    }
 
+    public List<String> getAvailableCurrencyPairs() {
+        return availableCurrencyPairs;
+    }
+
+    private void addAvailablePairs(){
+        availableCurrencyPairs.add("EUR/USD");
+        availableCurrencyPairs.add("EUR/GBP");
+        availableCurrencyPairs.add("AUD/USD");
+        availableCurrencyPairs.add("AUD/JPY");
+        availableCurrencyPairs.add("USD/JPY");
+        availableCurrencyPairs.add("USD/CHF");
+        availableCurrencyPairs.add("GBP/USD");
     }
 
     public void setPeriod(String s) {

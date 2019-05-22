@@ -7,9 +7,14 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.GridPane;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Controller {
 
     StatisticsController statisticsController;
+
+    CurrencyPairController currencyPairController;
 
     @FXML GridPane mainGridPane;  //parametr od formatowania głównego okna aplikacji
 
@@ -27,16 +32,27 @@ public class Controller {
 
     private String fileWithCurrences = "Exchange Rate.txt";
 
-    @FXML public void initialize() {
+    private List<String> currences;      // lista dostępnych walut
+
+    private List<String> currencesPairs;     // lista dostepnych part walut
+
+    @FXML public void initialize(){
         chartArea.setText("Tu się wyświętlą dane z analizy");
+
         containers = new Containers();
+        currences = new ArrayList<>();
+        currences = containers.readFile(fileWithCurrences);
+
+        currencyPairController = new CurrencyPairController();
+        currencesPairs = new ArrayList<>();
+        currencesPairs = currencyPairController.getAvailableCurrencyPairs();
+
         lineChart.setVisible(false);
-        currency.getItems().addAll(containers.readFile(fileWithCurrences));
+        currency.getItems().addAll(currences);
 
     }
 
     public int getAnaliseTypeIndex() {
-        //return analiseType.getValue().toString();
         return analiseType.getSelectionModel().getSelectedIndex();
     }
 
@@ -78,9 +94,16 @@ public class Controller {
         if (getAnaliseTypeName().equals("Rozkład zmiam")) {
             lineChart.setVisible(true);
             chartArea.setVisible(false);
+            currency.getItems().clear();
+            currency.setValue(currencesPairs.get(0));
+            currency.getItems().addAll(currencesPairs);
         } else {
             lineChart.setVisible(false);
             chartArea.setVisible(true);
+            currency.getItems().clear();
+            currency.setValue(currences.get(0));
+            currency.getItems().addAll(currences);
+
         }
         System.out.println("to działa" + getAnaliseTypeName());
 
