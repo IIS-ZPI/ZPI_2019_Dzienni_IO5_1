@@ -11,49 +11,41 @@ import java.time.temporal.ChronoUnit;
 public class SessionCountController {
     //TODO refactor
     enum Change {
-        DECREASE, MAINTAIN, INCREASE, UNKNOWN
+        DECREASE, MAINTAIN, INCREASE
     }
 
-    CurrencyModel currencyModel;
-    RateModel lastRateModel;
-    CountSessionStateModel countSessionStateModel;
-    boolean foundFriday;
-    boolean isDesiredChangeSet;
-    double change;
-    Change currentChange;
-    Change desiredChange;
-    LocalDate lastFriday;
-    boolean doItAnyway;
+    private CurrencyModel currencyModel;
+    private boolean foundFriday; //Used mainly when we skip friday for any reason e.g. because of holidays
+    private LocalDate lastFriday; //Used to track if we skipped friday. We will check if there is more than 7 days between lastFriday and currentDate
 
     private static final double epsilon = 0.005;
 
     public SessionCountController(CurrencyModel currencyModel) {
         this.currencyModel = currencyModel;
-        this.countSessionStateModel = new CountSessionStateModel();
         this.foundFriday = false;
-        this.isDesiredChangeSet = false;
-        this.doItAnyway = false;
-        this.desiredChange = Change.UNKNOWN;
     }
 
     public CountSessionStateModel calculateSessionCount(){
+        boolean doItAnyway = false; //If we skipped friday we have to compare rates between next friday and whatever day was closest to that skipped friday
+        Change currentChange, desiredChange = null;
+        RateModel lastRateModel;
+        CountSessionStateModel countSessionStateModel = new CountSessionStateModel();
 
-        int i = findPreviousFridayIndex( this.currencyModel.getRates().size() - 1 );
+        int i = findPreviousFridayIndex( this.currencyModel.getRates().size() - 1 ); //If we're in the middle of session, then we're discarding those days and start calculating from first friday
         if (i == -1)
             /*TODO throw exception because there is no friday*/;
 
-        this.lastRateModel = this.currencyModel.getRates().get(i);
+        lastRateModel = this.currencyModel.getRates().get(i);
 
         for (i-- ; i >= 0; i--) {
             LocalDate currentDate = LocalDate.parse(this.currencyModel.getRates().get(i).getEffectiveDate());
             DayOfWeek currentDayOfWeek = currentDate.getDayOfWeek();
-            if ( ( currentDayOfWeek.equals(DayOfWeek.FRIDAY) )  || Math.abs( ChronoUnit.DAYS.between(lastFriday, currentDate) ) > 7 || this.doItAnyway ) {
-                change = lastRateModel.getMid() - this.currencyModel.getRates().get(i).getMid();
+            if ( ( currentDayOfWeek.equals(DayOfWeek.FRIDAY) )  || Math.abs( ChronoUnit.DAYS.between(lastFriday, currentDate) ) > 7 || doItAnyway ) {
+                double change = lastRateModel.getMid() - this.currencyModel.getRates().get(i).getMid();
                 if (Math.abs(change) < epsilon) {
                     currentChange = Change.MAINTAIN;
-                    if (!isDesiredChangeSet){
+                    if (desiredChange == null){
                         desiredChange = Change.MAINTAIN;
-                        isDesiredChangeSet = true;
                         countSessionStateModel.increaseMaintainedResult();
                     } else if (currentChange == desiredChange) {
                         countSessionStateModel.increaseMaintainedResult();
@@ -61,9 +53,8 @@ public class SessionCountController {
                         break;
                 } else if (change < 0) {
                     currentChange = Change.DECREASE;
-                    if (!isDesiredChangeSet){
+                    if (desiredChange == null){
                         desiredChange = Change.DECREASE;
-                        isDesiredChangeSet = true;
                         countSessionStateModel.increaseFellResult();
                     } else if (currentChange == desiredChange) {
                         countSessionStateModel.increaseFellResult();
@@ -71,9 +62,8 @@ public class SessionCountController {
                         break;
                 } else if (change > 0) {
                     currentChange = Change.INCREASE;
-                    if (!isDesiredChangeSet){
+                    if (desiredChange == null){
                         desiredChange = Change.INCREASE;
-                        isDesiredChangeSet = true;
                         countSessionStateModel.increaseGrownResult();
                     } else if (currentChange == desiredChange) {
                         countSessionStateModel.increaseGrownResult();
@@ -90,14 +80,16 @@ public class SessionCountController {
                     i = findPreviousFridayIndex(i);
                     if (i == -1)
                         /*TODO throw exception because there is no friday*/;
-                    this.doItAnyway = true;
+                    doItAnyway = true;
                 }
             }
         }
         return countSessionStateModel;
     }
 
-    protected int findPreviousFridayIndex(int i){
+    /*This method is used firstly in finding first friday and secondly when we for whatever reason skip fridays
+    * TBH, I'm not sure if that second usage is required, will have to look into it later*/
+    private int findPreviousFridayIndex(int i){
         for ( ; i >= 0; i--) {
             LocalDate currentDate = LocalDate.parse(this.currencyModel.getRates().get(i).getEffectiveDate());
             DayOfWeek currentDayOfWeek = currentDate.getDayOfWeek();
