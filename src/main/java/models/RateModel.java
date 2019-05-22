@@ -1,5 +1,8 @@
 package models;
 
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class RateModel {
 
     private String no;
@@ -14,6 +17,11 @@ public class RateModel {
         this.mid = mid;
         this.bid = bid;
         this.ask = ask;
+    }
+
+    public RateModel(String effectiveDate, Double mid) {
+        this.effectiveDate = effectiveDate;
+        this.mid = mid;
     }
 
     public RateModel() {
@@ -41,5 +49,13 @@ public class RateModel {
 
     public void setMid(Double mid) {
         this.mid = mid;
+    }
+
+    public Double getBid() {
+        return bid;
+    }
+
+    public Double getAsk() {
+        return ask;
     }
 }
