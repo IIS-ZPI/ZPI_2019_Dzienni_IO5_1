@@ -11,16 +11,19 @@
 <GridPane alignment="center" hgap="10" vgap="10" fx:id="mainGridPane" xmlns:fx="http://javafx.com/fxml/1"
           xmlns="http://javafx.com/javafx/8.0.172-ea" fx:controller="controllers.Controller">
     <children>
-        <Label id="thirdLabel" GridPane.columnIndex="0" GridPane.rowIndex="0" prefWidth="150.0" styleClass="bold-label"
+        <Label id="thirdLabel" GridPane.columnIndex="0" GridPane.rowIndex="0" prefWidth="210.0" styleClass="bold-label"
                text="Rodzaj analizy"/>
-        <ComboBox fx:id="analiseType" GridPane.columnIndex="0" GridPane.rowIndex="1" prefWidth="150.0" promptText="Analiza" onAction="#checkAnaliseName">
+        <ComboBox fx:id="analiseType" GridPane.columnIndex="0" GridPane.rowIndex="1" prefWidth="210.0" promptText="Analiza" onAction="#checkAnaliseName">
             <items>
                 <FXCollections fx:factory="observableArrayList">
                     <String fx:value="Wyznaczanie ilości sesji"/>
                     <String fx:value="Miary statystyczne"/>
-                    <String fx:value="Rozkład zmiam"/>
+                    <String fx:value="Rozkład zmian"/>
             </FXCollections>
             </items>
+            <value>
+                <String fx:value="Wyznaczanie ilości sesji"/>
+            </value>
         </ComboBox>
         <Label id="firstLabel" GridPane.columnIndex="1" GridPane.rowIndex="0" prefWidth="120.0" styleClass="bold-label" text="Waluta"/>
         <ComboBox fx:id="currency" GridPane.columnIndex="1" GridPane.rowIndex="1" prefWidth="120.0" promptText="Waluta">
@@ -36,12 +39,6 @@
         <ComboBox fx:id="period" GridPane.columnIndex="2" GridPane.rowIndex="1" prefWidth="150.0" promptText="choose">
             <items>
                 <FXCollections fx:factory="observableArrayList" >
-                    <String fx:value="1 tydzień"/>
-                    <String fx:value="2 tygodnie"/>
-                    <String fx:value="1 miesiac"/>
-                    <String fx:value="kwartal"/>
-                    <String fx:value="pół roku"/>
-                    <String fx:value="rok"/>
                 </FXCollections>
             </items>
             <value>

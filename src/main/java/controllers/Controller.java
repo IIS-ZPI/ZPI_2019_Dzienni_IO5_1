@@ -36,7 +36,9 @@ public class Controller {
 
     private List<String> currencesPairs;     // lista dostepnych part walut
 
-    @FXML public void initialize(){
+
+
+    @FXML public void initialize() {
         chartArea.setText("Tu się wyświętlą dane z analizy");
 
         containers = new Containers();
@@ -49,7 +51,26 @@ public class Controller {
 
         lineChart.setVisible(false);
         currency.getItems().addAll(currences);
+        period.getItems().addAll(setAllPeriods());
 
+    }
+
+    private List<String> setAllPeriods(){
+        List<String> periods = new ArrayList<>();
+        periods.add("1 tydzień");
+        periods.add("2 tygodnie");
+        periods.add("1 miesiac");
+        periods.add("kwartal");
+        periods.add("pół roku");
+        periods.add("rok");
+        return periods;
+    }
+
+    private List<String> setPeriodsForDistributionOfChanges(){
+        List<String> periods = new ArrayList<>();
+        periods.add("1 miesiac");
+        periods.add("kwartal");
+        return periods;
     }
 
     public int getAnaliseTypeIndex() {
@@ -82,7 +103,7 @@ public class Controller {
         System.out.println("Period :" + getPeriodName());
     }
 
-    public String getStatistics() {
+    public String getStatistics() {                         // funkcja od ustawiania parametrów do Miar starystycznych
         statisticsController.setCurrency(getCurrencyName());
         statisticsController.setPeriodAndCalculate(getPeriodName());
         System.out.println(statisticsController.getStats());
@@ -90,19 +111,34 @@ public class Controller {
         return statisticsController.getStats().toString();
     }
 
+    public void distributionOfChanges(){                //funkcja do ustawiania parametów do Rozkładu zmian
+//        currencyPairController.setPeriod();
+    }
+
     @FXML public void checkAnaliseName() {
-        if (getAnaliseTypeName().equals("Rozkład zmiam")) {
+        if (getAnaliseTypeName().equals("Rozkład zmian")) {
             lineChart.setVisible(true);
             chartArea.setVisible(false);
+
             currency.getItems().clear();
             currency.setValue(currencesPairs.get(0));
             currency.getItems().addAll(currencesPairs);
+
+            period.getItems().clear();
+            period.setValue(setPeriodsForDistributionOfChanges().get(0));
+            period.getItems().addAll(setPeriodsForDistributionOfChanges());
         } else {
             lineChart.setVisible(false);
             chartArea.setVisible(true);
+
             currency.getItems().clear();
-            currency.setValue(currences.get(0));
+            currency.setValue("USD");
+//            currency.setValue(currences.get(0));
             currency.getItems().addAll(currences);
+
+            period.getItems().clear();
+            period.setValue(setAllPeriods().get(0));
+            period.getItems().addAll(setAllPeriods());
 
         }
         System.out.println("to działa" + getAnaliseTypeName());
@@ -110,10 +146,27 @@ public class Controller {
     }
 
     @FXML public void showNewItemDialog() {
-        statisticsController = new StatisticsController();
+        switch (getAnaliseTypeName()) {
+            case "Wyznaczanie ilości sesji": {
+                System.out.println(getAnaliseTypeName());
+                break;
+            }
+            case "Miary statystyczne": {
+                System.out.println(getAnaliseTypeName());
+                statisticsController = new StatisticsController();
+                System.out.println("currency name : " + getCurrencyName());
+                chartArea.setText(getStatistics());
+                break;
+            }
+            case "Rozkład zmian": {
+                System.out.println(getAnaliseTypeName());
+                break;
+            }
+        }
 
-        System.out.println("currency name : " + getCurrencyName());
-        chartArea.setText(getStatistics());
+        //         <String fx:value="Wyznaczanie ilości sesji"/>
+        //                    <String fx:value="Miary statystyczne"/>
+        //                    <String fx:value="Rozkład zmian"/>
 
     }
 
