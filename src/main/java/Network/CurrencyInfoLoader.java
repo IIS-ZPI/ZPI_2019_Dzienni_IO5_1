@@ -36,7 +36,7 @@ public class CurrencyInfoLoader {
 	/** Returns data for N last days */
 	public CurrencyModel getCurrencyModelForLastDays(String tableType, String currency, long days) {
 		try {
-			return (CurrencyModel) objectMapper.readValue(buildURL(tableType, currency, String.valueOf(days)), CurrencyModel.class);
+			return objectMapper.readValue(buildURL(tableType, currency, String.valueOf(days)), CurrencyModel.class);
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
@@ -66,7 +66,7 @@ public class CurrencyInfoLoader {
 		do {
 			try {
 				URL url = buildURL(tableType, currency, startDate.toString(), endDate.toString());
-				lastModel = (CurrencyModel) objectMapper.readValue(url, CurrencyModel.class);
+				lastModel = objectMapper.readValue(url, CurrencyModel.class);
 			} catch (Exception ex) {
 				try {
 					URL url = buildURL("b", currency, startDate.toString(), endDate.toString());
@@ -108,6 +108,4 @@ public class CurrencyInfoLoader {
 		System.out.println(url);
 		return new URL(url);
 	}
-
-
 }
