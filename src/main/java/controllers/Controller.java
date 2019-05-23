@@ -104,7 +104,12 @@ public class Controller {
     }
 
     public String getCurrencyName() {
-        return currency.getSelectionModel().getSelectedItem().toString();
+        try {
+            return currency.getSelectionModel().getSelectedItem().toString();
+        } catch (NullPointerException e){
+            currency.getSelectionModel().select("USD");
+            return currency.getSelectionModel().getSelectedItem().toString();
+        }
     }
 
     public int getPeriodIndex() {
@@ -112,7 +117,12 @@ public class Controller {
     }
 
     public String getPeriodName() {
-        return period.getSelectionModel().getSelectedItem().toString();
+        try {
+            return period.getSelectionModel().getSelectedItem().toString();
+        } catch (NullPointerException e){
+            period.getSelectionModel().selectFirst();
+            return period.getSelectionModel().getSelectedItem().toString();
+        }
     }
 
     public void getIndexes() {
