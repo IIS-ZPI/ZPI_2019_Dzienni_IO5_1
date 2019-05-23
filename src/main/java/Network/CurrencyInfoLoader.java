@@ -68,7 +68,12 @@ public class CurrencyInfoLoader {
 				URL url = buildURL(tableType, currency, startDate.toString(), endDate.toString());
 				lastModel = (CurrencyModel) objectMapper.readValue(url, CurrencyModel.class);
 			} catch (Exception ex) {
-				ex.printStackTrace();
+				try {
+					URL url = buildURL("b", currency, startDate.toString(), endDate.toString());
+					lastModel = (CurrencyModel) objectMapper.readValue(url, CurrencyModel.class);
+				} catch (Exception ex2){
+					ex2.printStackTrace();
+				}
 			}
 			modelList.addAll(lastModel.getRates());
 			startDate = endDate.plusDays(1);
