@@ -2,14 +2,27 @@ package controllers;
 
 import Utils.Containers;
 import javafx.fxml.FXML;
+import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.GridPane;
+import models.CurrencyModel;
+import models.RateModel;
+
+import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Controller {
 
     StatisticsController statisticsController;
+
+    CurrencyPairController currencyPairController;
+
+    SessionCountController sessionCountController;
 
     @FXML GridPane mainGridPane;  //parametr od formatowania głównego okna aplikacji
 
@@ -17,30 +30,67 @@ public class Controller {
 
     @FXML ComboBox currency;
 
-    @FXML ComboBox currencyToCompare;
-
     @FXML ComboBox period;
 
     @FXML TextArea chartArea;
 
-    @FXML LineChart lineChart;
+    @FXML LineChart<String, Number> lineChart;
+
+    @FXML CategoryAxis xAxis;
+
+    @FXML NumberAxis yAxis;
+
+    XYChart.Series<String, Number> series;
 
     private Containers containers;          //klasa od pobierania listy walut z pliku
 
     private String fileWithCurrences = "Exchange Rate.txt";
 
+    private List<String> currences;      // lista dostępnych walut
+
+    private List<String> currencesPairs;     // lista dostepnych part walut
+
     @FXML public void initialize() {
         chartArea.setText("Tu się wyświętlą dane z analizy");
+
+        xAxis.setLabel("Dzień");
+        xAxis.setTickLabelRotation(90);
+        yAxis.setLabel("Cena");
+        yAxis.setForceZeroInRange(false);
+
         containers = new Containers();
+        currences = new ArrayList<>();
+        currences = containers.readFile(fileWithCurrences);
+
+        currencyPairController = new CurrencyPairController();
+        currencesPairs = new ArrayList<>();
+        currencesPairs = currencyPairController.getAvailableCurrencyPairs();
+
         lineChart.setVisible(false);
-        currencyToCompare.setVisible(false);
-        currency.getItems().addAll(containers.readFile(fileWithCurrences));
-        currencyToCompare.getItems().addAll(containers.readFile(fileWithCurrences));
+        currency.getItems().addAll(currences);
+        period.getItems().addAll(setAllPeriods());
 
     }
 
+    private List<String> setAllPeriods() {
+        List<String> periods = new ArrayList<>();
+        periods.add("1 tydzień");
+        periods.add("2 tygodnie");
+        periods.add("1 miesiac");
+        periods.add("kwartal");
+        periods.add("pół roku");
+        periods.add("rok");
+        return periods;
+    }
+
+    private List<String> setPeriodsForDistributionOfChanges() {
+        List<String> periods = new ArrayList<>();
+        periods.add("1 miesiac");
+        periods.add("kwartal");
+        return periods;
+    }
+
     public int getAnaliseTypeIndex() {
-        //return analiseType.getValue().toString();
         return analiseType.getSelectionModel().getSelectedIndex();
     }
 
@@ -70,7 +120,8 @@ public class Controller {
         System.out.println("Period :" + getPeriodName());
     }
 
-    public String getStatistics() {
+    public String getStatistics() {                         // funkcja od ustawiania parametrów do Miar starystycznych
+        statisticsController = new StatisticsController();
         statisticsController.setCurrency(getCurrencyName());
         statisticsController.setPeriodAndCalculate(getPeriodName());
         System.out.println(statisticsController.getStats());
@@ -78,25 +129,83 @@ public class Controller {
         return statisticsController.getStats().toString();
     }
 
+    public void distributionOfChanges() {                //funkcja do ustawiania parametów do Rozkład
+        currencyPairController.setPeriod(getPeriodName());
+        currencyPairController.setChosedCurrencyPair(getCurrencyName());
+        CurrencyModel currencyModel = new CurrencyModel();
+        currencyModel = currencyPairController.calculateCurrencyPair();
+
+        List<RateModel> rateModels = new ArrayList<>();
+        rateModels = currencyModel.getRates();
+        if (!lineChart.getData().isEmpty()) {
+            lineChart.getData().clear();
+        }
+        series = new XYChart.Series();
+
+        for (RateModel rateModel : rateModels) {
+
+            series.getData().add((new XYChart.Data(rateModel.getEffectiveDate(), rateModel.getMid())));
+        }
+        lineChart.getData().add(series);
+
+    }
+
     @FXML public void checkAnaliseName() {
-        if (getAnaliseTypeName().equals("Rozkład zmiam")) {
+        if (getAnaliseTypeName().equals("Rozkład zmian")) {
             lineChart.setVisible(true);
-            currencyToCompare.setVisible(true);
             chartArea.setVisible(false);
+
+            currency.getItems().clear();
+            currency.setValue(currencesPairs.get(0));
+            currency.getItems().addAll(currencesPairs);
+
+            period.getItems().clear();
+            period.setValue(setPeriodsForDistributionOfChanges().get(0));
+            period.getItems().addAll(setPeriodsForDistributionOfChanges());
         } else {
             lineChart.setVisible(false);
-            currencyToCompare.setVisible(false);
             chartArea.setVisible(true);
+
+            currency.getItems().clear();
+            currency.setValue("USD");
+            //            currency.setValue(currences.get(0));
+            currency.getItems().addAll(currences);
+
+            period.getItems().clear();
+            period.setValue(setAllPeriods().get(0));
+            period.getItems().addAll(setAllPeriods());
+
         }
         System.out.println("to działa" + getAnaliseTypeName());
 
     }
 
-    @FXML public void showNewItemDialog() {
-        statisticsController = new StatisticsController();
+    @FXML public void showNewItemDialog() throws ParseException {
+        switch (getAnaliseTypeName()) {
+            case "Wyznaczanie ilości sesji": {
+                System.out.println(getAnaliseTypeName());
+                CurrencyModel currencyModel = new CurrencyModel();
+                currencyModel.setCurrency(getCurrencyName());
+                sessionCountController = new SessionCountController(currencyModel);
+//                sessionCountController.calculateSessionCount();
+                System.out.println();
+                chartArea.setText("Tu przekaać dane do wyświetlania");               //tu podać string do wyświetlenia w gui
 
-        System.out.println("currency name : " + getCurrencyName());
-        chartArea.setText(getStatistics());
+
+                break;
+            }
+            case "Miary statystyczne": {
+                System.out.println(getAnaliseTypeName());
+                System.out.println("currency name : " + getCurrencyName());
+                chartArea.setText(getStatistics());
+                break;
+            }
+            case "Rozkład zmian": {
+                distributionOfChanges();
+                System.out.println(getAnaliseTypeName());
+                break;
+            }
+        }
 
     }
 

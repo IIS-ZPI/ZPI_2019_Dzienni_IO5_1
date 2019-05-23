@@ -11,28 +11,22 @@
 <GridPane alignment="center" hgap="10" vgap="10" fx:id="mainGridPane" xmlns:fx="http://javafx.com/fxml/1"
           xmlns="http://javafx.com/javafx/8.0.172-ea" fx:controller="controllers.Controller">
     <children>
-        <Label id="thirdLabel" GridPane.columnIndex="0" GridPane.rowIndex="0" prefWidth="150.0" styleClass="bold-label"
+        <Label id="thirdLabel" GridPane.columnIndex="0" GridPane.rowIndex="0" prefWidth="210.0" styleClass="bold-label"
                text="Rodzaj analizy"/>
-        <ComboBox fx:id="analiseType" GridPane.columnIndex="0" GridPane.rowIndex="1" prefWidth="150.0" promptText="Analiza" onAction="#checkAnaliseName">
+        <ComboBox fx:id="analiseType" GridPane.columnIndex="0" GridPane.rowIndex="1" prefWidth="210.0" promptText="Analiza" onAction="#checkAnaliseName">
             <items>
                 <FXCollections fx:factory="observableArrayList">
                     <String fx:value="Wyznaczanie ilości sesji"/>
                     <String fx:value="Miary statystyczne"/>
-                    <String fx:value="Rozkład zmiam"/>
+                    <String fx:value="Rozkład zmian"/>
             </FXCollections>
             </items>
-        </ComboBox>
-        <Label id="firstLabel" GridPane.columnIndex="1" GridPane.rowIndex="0" prefWidth="100.0" styleClass="bold-label" text="Waluta"/>
-        <ComboBox fx:id="currency" GridPane.columnIndex="1" GridPane.rowIndex="1" prefWidth="100.0" promptText="Waluta">
-            <items>
-                <FXCollections fx:factory="observableArrayList">
-                </FXCollections>
-            </items>
             <value>
-                <String fx:value="USD"/>
+                <String fx:value="Wyznaczanie ilości sesji"/>
             </value>
         </ComboBox>
-        <ComboBox fx:id="currencyToCompare" GridPane.columnIndex="1" GridPane.rowIndex="2" prefWidth="100.0" promptText="Waluta2">
+        <Label id="firstLabel" GridPane.columnIndex="1" GridPane.rowIndex="0" prefWidth="120.0" styleClass="bold-label" text="Waluta"/>
+        <ComboBox fx:id="currency" GridPane.columnIndex="1" GridPane.rowIndex="1" prefWidth="120.0" promptText="Waluta">
             <items>
                 <FXCollections fx:factory="observableArrayList">
                 </FXCollections>
@@ -42,15 +36,9 @@
             </value>
         </ComboBox>
         <Label id="secondLabel" GridPane.columnIndex="2" GridPane.rowIndex="0" prefWidth="150.0" styleClass="bold-label" text="Okres"/>
-        <ComboBox fx:id="period" GridPane.columnIndex="2" GridPane.rowIndex="1" prefWidth="150.0" promptText="choose">
+        <ComboBox fx:id="period" GridPane.columnIndex="2" GridPane.rowIndex="1" prefWidth="150.0" promptText="choose" >
             <items>
                 <FXCollections fx:factory="observableArrayList" >
-                    <String fx:value="1 tydzień"/>
-                    <String fx:value="2 tygodnie"/>
-                    <String fx:value="1 miesiac"/>
-                    <String fx:value="kwartal"/>
-                    <String fx:value="pół roku"/>
-                    <String fx:value="rok"/>
                 </FXCollections>
             </items>
             <value>
@@ -61,12 +49,12 @@
         <Button id="calculateButton" GridPane.columnIndex="5" GridPane.rowIndex="1" prefWidth="100.0" text="Licz"
                 onAction="#showNewItemDialog"/>
         <TextArea fx:id="chartArea" GridPane.columnIndex="2" GridPane.rowIndex="9" prefWidth="500.0" prefHeight="500" styleClass="bold-label" text=""/>
-        <LineChart fx:id="lineChart" title="Chart Test" GridPane.columnIndex="2" GridPane.rowIndex="9" prefWidth="500.0" prefHeight="500">
+        <LineChart fx:id="lineChart" title="Rozkład zmian" GridPane.columnIndex="2" GridPane.rowIndex="9" prefWidth="1190.0" prefHeight="500">
         <xAxis>
-            <CategoryAxis side="BOTTOM" />
+            <CategoryAxis fx:id="xAxis" side="BOTTOM" />
         </xAxis>
         <yAxis>
-            <NumberAxis side="LEFT" />
+            <NumberAxis fx:id="yAxis" side="LEFT" />
         </yAxis>
     </LineChart>
     </children>
