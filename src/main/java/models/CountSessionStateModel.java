@@ -50,7 +50,13 @@ public class CountSessionStateModel {
 
     @Override
     public String toString() {
-        return "CountSessionStateModel{" +
+        if (grownResult != 0)
+            return "Ilość ostatnich sesji wzrostowych: " + grownResult;
+        if (fellResult != 0)
+            return "Ilość ostatnich sesji spadkowych: " + fellResult;
+        if (maintainedResult != 0)
+            return "Ilość ostatnich sesji bez zmian: " + maintainedResult;
+        return "CountSessionStateModel {" +
                 "grownResult = " + grownResult +
                 ", fellResult = " + fellResult +
                 ", maintainedResult = " + maintainedResult +
