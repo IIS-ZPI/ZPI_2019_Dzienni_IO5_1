@@ -12,10 +12,7 @@ import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
-import java.util.EnumSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 
 import static org.hamcrest.Matchers.*;
@@ -90,20 +87,14 @@ public class CurrencyInfoControllerTest {
 
 //	@Test
 //	public void testForCurrencyInfoLoaderBetaVersionEUR() {
-//
+//		Period period = Period.of(0, 0, 0);
+//		LocalDate data = LocalDate.of(2017,2,2);
+//		LocalDate then = data.plus(period);
 //		String expecteddata = "4.3084";
 //		String url = "http://api.nbp.pl/api/exchangerates/rates/a/eur/2017-02-02/";
-//		//LocalDate today = LocalDate.now();
-//		//LocalDate then = today.minus(period);
-//
-//
-//		CurrencyModel model =  CurrencyInfoController.createCurrencyModelFromUrl(url);
-//		for(RateModel mod: model.getRates()) {
-//			System.out.println(mod.getNo());
-//		}
-//		System.out.println(model.getRates().size());
-//
-//		assertEquals(expecteddata, url,false);
+//		url += then.toString() + "/";
+//		CurrencyModel model =  CurrencyInfoLoader.getInstance().getCurrencyModelForPeriod("a", "eur",period);
+//		assertEquals(expecteddata, url);
 //	}
 	@Test
 	public void emptyPeriodShouldReturnZeroedStateModel() {
