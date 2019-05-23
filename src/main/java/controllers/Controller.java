@@ -2,7 +2,10 @@ package controllers;
 
 import Utils.Containers;
 import javafx.fxml.FXML;
-import javafx.scene.chart.*;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.LineChart;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.GridPane;
@@ -18,6 +21,8 @@ public class Controller {
     StatisticsController statisticsController;
 
     CurrencyPairController currencyPairController;
+
+    SessionCountController sessionCountController;
 
     @FXML GridPane mainGridPane;  //parametr od formatowania głównego okna aplikacji
 
@@ -66,8 +71,6 @@ public class Controller {
         period.getItems().addAll(setAllPeriods());
 
     }
-
-
 
     private List<String> setAllPeriods() {
         List<String> periods = new ArrayList<>();
@@ -126,8 +129,6 @@ public class Controller {
         return statisticsController.getStats().toString();
     }
 
-
-
     public void distributionOfChanges() {                //funkcja do ustawiania parametów do Rozkład
         currencyPairController.setPeriod(getPeriodName());
         currencyPairController.setChosedCurrencyPair(getCurrencyName());
@@ -136,11 +137,10 @@ public class Controller {
 
         List<RateModel> rateModels = new ArrayList<>();
         rateModels = currencyModel.getRates();
-        if(!lineChart.getData().isEmpty()){
+        if (!lineChart.getData().isEmpty()) {
             lineChart.getData().clear();
         }
         series = new XYChart.Series();
-
 
         for (RateModel rateModel : rateModels) {
 
@@ -184,6 +184,14 @@ public class Controller {
         switch (getAnaliseTypeName()) {
             case "Wyznaczanie ilości sesji": {
                 System.out.println(getAnaliseTypeName());
+                CurrencyModel currencyModel = new CurrencyModel();
+                currencyModel.setCurrency(getCurrencyName());
+                sessionCountController = new SessionCountController(currencyModel);
+//                sessionCountController.calculateSessionCount();
+                System.out.println();
+                chartArea.setText("Tu przekaać dane do wyświetlania");               //tu podać string do wyświetlenia w gui
+
+
                 break;
             }
             case "Miary statystyczne": {
