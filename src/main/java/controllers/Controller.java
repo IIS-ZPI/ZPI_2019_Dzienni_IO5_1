@@ -2,11 +2,14 @@ package controllers;
 
 import Utils.Containers;
 import javafx.fxml.FXML;
-import javafx.scene.chart.LineChart;
+import javafx.scene.chart.*;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.GridPane;
+import models.CurrencyModel;
+import models.RateModel;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,7 +29,13 @@ public class Controller {
 
     @FXML TextArea chartArea;
 
-    @FXML LineChart lineChart;
+    @FXML LineChart<String, Number> lineChart;
+
+    @FXML CategoryAxis xAxis;
+
+    @FXML NumberAxis yAxis;
+
+    XYChart.Series<String, Number> series;
 
     private Containers containers;          //klasa od pobierania listy walut z pliku
 
@@ -36,10 +45,13 @@ public class Controller {
 
     private List<String> currencesPairs;     // lista dostepnych part walut
 
-
-
     @FXML public void initialize() {
         chartArea.setText("Tu się wyświętlą dane z analizy");
+
+        xAxis.setLabel("Dzień");
+        xAxis.setTickLabelRotation(90);
+        yAxis.setLabel("Cena");
+        yAxis.setForceZeroInRange(false);
 
         containers = new Containers();
         currences = new ArrayList<>();
@@ -55,7 +67,9 @@ public class Controller {
 
     }
 
-    private List<String> setAllPeriods(){
+
+
+    private List<String> setAllPeriods() {
         List<String> periods = new ArrayList<>();
         periods.add("1 tydzień");
         periods.add("2 tygodnie");
@@ -66,7 +80,7 @@ public class Controller {
         return periods;
     }
 
-    private List<String> setPeriodsForDistributionOfChanges(){
+    private List<String> setPeriodsForDistributionOfChanges() {
         List<String> periods = new ArrayList<>();
         periods.add("1 miesiac");
         periods.add("kwartal");
@@ -104,6 +118,7 @@ public class Controller {
     }
 
     public String getStatistics() {                         // funkcja od ustawiania parametrów do Miar starystycznych
+        statisticsController = new StatisticsController();
         statisticsController.setCurrency(getCurrencyName());
         statisticsController.setPeriodAndCalculate(getPeriodName());
         System.out.println(statisticsController.getStats());
@@ -111,8 +126,28 @@ public class Controller {
         return statisticsController.getStats().toString();
     }
 
-    public void distributionOfChanges(){                //funkcja do ustawiania parametów do Rozkładu zmian
-//        currencyPairController.setPeriod();
+
+
+    public void distributionOfChanges() {                //funkcja do ustawiania parametów do Rozkład
+        currencyPairController.setPeriod(getPeriodName());
+        currencyPairController.setChosedCurrencyPair(getCurrencyName());
+        CurrencyModel currencyModel = new CurrencyModel();
+        currencyModel = currencyPairController.calculateCurrencyPair();
+
+        List<RateModel> rateModels = new ArrayList<>();
+        rateModels = currencyModel.getRates();
+        if(!lineChart.getData().isEmpty()){
+            lineChart.getData().clear();
+        }
+        series = new XYChart.Series();
+
+
+        for (RateModel rateModel : rateModels) {
+
+            series.getData().add((new XYChart.Data(rateModel.getEffectiveDate(), rateModel.getMid())));
+        }
+        lineChart.getData().add(series);
+
     }
 
     @FXML public void checkAnaliseName() {
@@ -133,7 +168,7 @@ public class Controller {
 
             currency.getItems().clear();
             currency.setValue("USD");
-//            currency.setValue(currences.get(0));
+            //            currency.setValue(currences.get(0));
             currency.getItems().addAll(currences);
 
             period.getItems().clear();
@@ -145,7 +180,7 @@ public class Controller {
 
     }
 
-    @FXML public void showNewItemDialog() {
+    @FXML public void showNewItemDialog() throws ParseException {
         switch (getAnaliseTypeName()) {
             case "Wyznaczanie ilości sesji": {
                 System.out.println(getAnaliseTypeName());
@@ -153,20 +188,16 @@ public class Controller {
             }
             case "Miary statystyczne": {
                 System.out.println(getAnaliseTypeName());
-                statisticsController = new StatisticsController();
                 System.out.println("currency name : " + getCurrencyName());
                 chartArea.setText(getStatistics());
                 break;
             }
             case "Rozkład zmian": {
+                distributionOfChanges();
                 System.out.println(getAnaliseTypeName());
                 break;
             }
         }
-
-        //         <String fx:value="Wyznaczanie ilości sesji"/>
-        //                    <String fx:value="Miary statystyczne"/>
-        //                    <String fx:value="Rozkład zmian"/>
 
     }
 
