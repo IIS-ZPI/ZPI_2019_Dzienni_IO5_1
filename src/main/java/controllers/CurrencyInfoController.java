@@ -7,7 +7,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 
 import java.net.URL;
 
-
+//TODO: remove. implemented in CurrencyInfoLoader
 public class CurrencyInfoController {
     private CurrencyModel currentCurrencyModel;
     private static double epsilon = 0.005;
@@ -21,7 +21,7 @@ public class CurrencyInfoController {
         // System.out.println(countSessionStateModel);
     }
 
-    private CurrencyModel createCurrencyModelFromUrl(String urlBase) {
+    public static CurrencyModel createCurrencyModelFromUrl(String urlBase) {
         try {
             ObjectMapper mapper = new ObjectMapper();
             return (CurrencyModel) mapper.readValue(new URL(urlBase), CurrencyModel.class);

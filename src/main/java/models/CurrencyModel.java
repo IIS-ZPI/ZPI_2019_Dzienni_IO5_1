@@ -1,5 +1,6 @@
 package models;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CurrencyModel {
@@ -17,6 +18,7 @@ public class CurrencyModel {
     }
 
     public CurrencyModel() {
+        rates = new ArrayList<>();
     }
 
     public String getTable() {
