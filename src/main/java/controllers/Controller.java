@@ -9,6 +9,7 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.GridPane;
+import models.CountSessionStateModel;
 import models.CurrencyModel;
 import models.RateModel;
 
@@ -150,6 +151,14 @@ public class Controller {
 
     }
 
+    public CountSessionStateModel getSessionCount() {
+        sessionCountController = new SessionCountController();
+        sessionCountController.setCurrency(getCurrencyName());
+        sessionCountController.setPeriodAndCalculate(getPeriodName());
+
+        return sessionCountController.getCountSessionStateModel();
+    }
+
     @FXML public void checkAnaliseName() {
         if (getAnaliseTypeName().equals("Rozkład zmian")) {
             lineChart.setVisible(true);
@@ -184,12 +193,11 @@ public class Controller {
         switch (getAnaliseTypeName()) {
             case "Wyznaczanie ilości sesji": {
                 System.out.println(getAnaliseTypeName());
-                CurrencyModel currencyModel = new CurrencyModel();
-                currencyModel.setCurrency(getCurrencyName());
-                sessionCountController = new SessionCountController(currencyModel);
-//                sessionCountController.calculateSessionCount();
                 System.out.println();
-                chartArea.setText("Tu przekaać dane do wyświetlania");               //tu podać string do wyświetlenia w gui
+                if (getSessionCount() == null)
+                    chartArea.setText("Cannot calculate sessions count");
+                else
+                    chartArea.setText(getSessionCount().toString());               //tu podać string do wyświetlenia w gui
 
 
                 break;
